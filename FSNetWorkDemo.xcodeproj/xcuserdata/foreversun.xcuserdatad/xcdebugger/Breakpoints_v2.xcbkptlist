@@ -90,7 +90,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FSNetWorkDemo/GET/Main/View/FSWebViewController.m"
-            timestampString = "550429100.522004"
+            timestampString = "550514712.891629"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "48"
@@ -106,7 +106,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FSNetWorkDemo/GET/Main/View/FSWebViewController.m"
-            timestampString = "550429100.5220751"
+            timestampString = "550514712.891695"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
@@ -122,28 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "FSNetWorkDemo/GET/Main/View/FSVideoView.m"
-            timestampString = "550429100.52214"
+            timestampString = "550514712.891747"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
-            landmarkName = "-playWithImagePath:videoPath:"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FSNetWorkDemo/GET/Main/View/FSVideoView.m"
-            timestampString = "550429100.522539"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
-            landmarkName = "-layoutSubviews"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-play"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

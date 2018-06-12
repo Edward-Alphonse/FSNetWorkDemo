@@ -23,7 +23,7 @@
 - (instancetype)initWithURL:(NSString *)urlString {
     if(self = [super init]) {
         NSURL *url = [NSURL URLWithString:urlString];
-        _request = [NSURLRequest requestWithURL:url];
+        _request = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestReturnCacheDataElseLoad timeoutInterval:5];
         _webView = [[UIWebView alloc] initWithFrame:CGRectZero];
         _webView.delegate = self;
     }

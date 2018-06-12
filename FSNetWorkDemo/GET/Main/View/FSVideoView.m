@@ -14,9 +14,10 @@
 @interface FSVideoView ()
 
 @property (nonatomic, strong) UIImageView *imageView;
-@property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) UIImageView *playIcon;
 @property (nonatomic, assign) BOOL isPlay;
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
+@property (nonatomic, copy) NSString *videoPath;
 @end
 
 @implementation FSVideoView
@@ -25,14 +26,12 @@
     if(self = [super initWithFrame:frame]) {
         _imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         [self addSubview:_imageView];
-        _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
-        [_playButton setTintColor:[UIColor redColor]];
-        [self addSubview:_playButton];
+//        _playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+//        [_playButton setImage:[UIImage imageNamed:@"play"] forState:UIControlStateNormal];
+        _playIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"play"]];
+        [_playIcon setBackgroundColor:[UIColor whiteColor]];
+        [self addSubview:_playIcon];
         _isPlay = false;
-        _playerLayer = [[AVPlayerLayer alloc] init];
-
-        
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(clickButton:)];
         [self addGestureRecognizer:tap];
     }
@@ -47,19 +46,29 @@
     if(isStringEmpey(videoPath)) {
         return ;
     }
-    NSURL *url = [NSURL URLWithString:videoPath];
-    AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:url];
-    AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
-    _playerLayer.player = player;
+    _videoPath = videoPath;
 }
 
 - (void)layoutSubviews {
     CGFloat width = CGRectGetWidth(self.frame);
     CGFloat height = CGRectGetHeight(self.frame);
     _imageView.frame = CGRectMake(0, 0, width, height);
-    _playerLayer.frame = CGRectMake(0, 0, width, height);
-    _playButton.frame = CGRectMake(0, 0, 40, 40);
-    _playButton.center = CGPointMake(width/2, height/2);
+    _playIcon.frame = CGRectMake(0, 0, 40, 40);
+    _playIcon.layer.cornerRadius = 40 / 2;
+    _playIcon.center = CGPointMake(width/2, height/2);
+}
+
+#pragma mark: lazy load
+- (AVPlayerLayer *)playerLayer {
+    if(!_playerLayer) {
+        NSURL *url = [NSURL URLWithString:_videoPath];
+        AVPlayerItem *item = [[AVPlayerItem alloc] initWithURL:url];
+        AVPlayer *player = [AVPlayer playerWithPlayerItem:item];
+        _playerLayer = [[AVPlayerLayer alloc] init];
+        _playerLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame));
+        _playerLayer.player = player;
+    }
+    return _playerLayer;
 }
 
 #pragma mark: 事件
@@ -73,18 +82,20 @@
 
 - (void)play {
     _isPlay = true;
-    _playButton.hidden = _isPlay;
+    _playIcon.hidden = _isPlay;
     _imageView.hidden = _isPlay;
-    [self.layer addSublayer:_playerLayer];
-    [_playerLayer.player play];
+    //TODO: 会出现两张图重叠出现
+//    _imageView.image = [UIImage imageNamed:@"pause"];
+    [self.layer addSublayer:self.playerLayer];
+    [self.playerLayer.player play];
 }
 
 - (void)pause {
     _isPlay = false;
     _imageView.hidden = _isPlay;
-    _playButton.hidden = _isPlay;
-    [_playerLayer.player pause];
-    [_playerLayer removeFromSuperlayer];
+    _playIcon.hidden = _isPlay;
+    [self.playerLayer.player pause];
+    [self.playerLayer removeFromSuperlayer];
 }
 
 #pragma mark: Class Method
